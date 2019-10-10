@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Profile</title>
+
+  </head>
+  <body>
+    <ol>
+      {% for picture in pictures %}
+      <li>{{username}} - <img src="{{url_for('file', filename=picture['screenshot'])}}" width=100px height = 100px></li>
+      {% endfor %} <!-- have to end in jinja-->
+    </ol>
+    <form method= "post" action="/deleteAll">
+      <p>Password</p>
+      <input type="password" name="password" maxlength="8">
+      <input type="submit" value="Submit"/>
+    </form>
+    <a href="/index">Enter new screenshot</a>
+  </body>
+</html>
