@@ -1,42 +1,57 @@
-{% extends "bootstrap/base.html" %}
-
-{% block title %}
-Demo App
-{% endblock %}
-
-{% block styles %}
-{{super()}}
-<link rel="stylesheet" href="{{url_for('.static', filename='starter-template.css')}}">
-{% endblock %}
-
-{% block content %}
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">Project name</a>
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="{{ url_for('login') }}">Login</a></li>
-            <li><a href="{{ url_for('signup') }}">Sign Up</a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
-
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Log in</title>
+  </head>
+  <body>
     <div class="container">
 
-      <div class="starter-template">
-        <h1>Bootstrap starter template</h1>
-        <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">Screenshot Keeper!</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+          <a class="nav-item nav-link" href="/pictures">Saved Screenshots</a>
+          <a class="nav-item nav-link" href="/input">Add New</a>
+        </div>
       </div>
+    </nav>
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+          <h1 class="display">Screenshot Keeper!</h1>
+          <p class="lead">Simply log in and save your screenshots!</p>
+        </div>
+      </div>
+      <ol>
+        {% for picture in pictures %}
+        <li><img src="{{url_for('file', filename=picture['screenshot'])}}" width=100px height = 100px></li>
+        {% endfor %} <!-- have to end in jinja-->
+      </ol>
 
-    </div><!-- /.container -->
-{% endblock %}
+          {% if session %}
+          <p>You are logged as in {{ session['username']}}.<a href="/logout"> Log out</a></p>
+          {% else %}
+          <form action="/login" method="post">
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input type="text" name="username" class="form-control" id="inlineFormInput" placeholder="Username">
+            </div> <!--username-->
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Password">
+            </div> <!--password-->
+            <button type="submit" class="btn btn-primary">Log in</button>
+
+            <p>Need an account?<a href="/signup"> Create one.</a> </p>
+            {% endif %}
+
+          </form>
+
+        </div> <!--container-->
+      </body>
+</html>

@@ -3,8 +3,7 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-    <title>Cleared</title>
+    <title>Searched Results</title>
   </head>
   <body>
     <div class="container">
@@ -21,9 +20,9 @@
         </div>
       </div>
     </nav>
-    <br>
-    <center> <h2>Deleted!</h2></center>
-  </div> <!--container-->
-
+    {% for term in searched_terms %}
+    <p>{{term.file_name}} - {{term.category}}</p><img src="{{url_for('file', filename=term['screenshot'])}}" height = 200px>
+    {% endfor %}
+    </div>
   </body>
 </html>
